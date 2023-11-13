@@ -1,7 +1,10 @@
+console.clear();
+require("./utility/check")()
+
 const fs = require("fs")
 const {Client, GatewayIntentBits} = require('discord.js');
-require('dotenv').config();
 
+//Startup checks
 
 
 const client = new Client({
