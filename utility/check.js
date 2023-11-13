@@ -1,9 +1,7 @@
-const mysql = require("./mysql")
 const fs = require("fs")
 
 module.exports = async () => {
-    console.log("Checking integrity...")
-
+    console.log("[BOT] Checking integrity...")
 
 //#region CHECK FOR .env INTEGRITY
     if (fs.existsSync("./.env"))
@@ -31,32 +29,21 @@ module.exports = async () => {
 
 
 //#region CHECK FOR DATABASE INTEGRITY
+    const mysql = require("./mysql.js")
 
-    // let _auth = {
-    //     host: "127.0.0.1",
-    //     database: "rolekeeper",
-    //     user:"root",
-    //     password:"root"
-    // }
-    
-    let _auth = {
-        host: process.env.MYSQL_HOST,
-        database: process.env.MYSQL_DATABASE,
-        user: process.env.MYSQL_USER,
-        password: process.env.MYSQL_PASSWORD
-      };
 
     //Check for the tables
     let {results: q1, fields} = await mysql(`
         SHOW TABLES;
-    `, [], _auth)
+    `)
 
+    //Map the tables
     let tables = q1.map(row => row.Tables_in_rolekeeper);
 
-
+    //Check for the tables
     if (!tables.includes("guilds") && !tables.includes("roles") && !tables.includes("cache"))
-    {
-        console.log("Creating database...")
+    {//Add the structure if not exists
+        console.log("[BOT] Creating database...")
 
         let querys = [
 
@@ -95,12 +82,10 @@ module.exports = async () => {
         ]
 
         for (const query of querys) {
-            await mysql(query, [], _auth)
+            await mysql(query)
         }
 
     }
-
-
 
 //#endregion
 

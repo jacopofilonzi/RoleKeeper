@@ -5,16 +5,10 @@ module.exports = {
     EventName: Events.GuildDelete,
     Once: false,
     Execute: async (client, oldGuild) => {
-        
-        let _auth = {
-            host: process.env.MYSQL_HOST,
-            database: process.env.MYSQL_DATABASE,
-            user: process.env.MYSQL_USER,
-            password: process.env.MYSQL_PASSWORD
-          };
 
+        //Delete the guild if the option is enabled
         if (process.env.DELETEONLEAVE == "true")
-            await mysql("DELETE FROM guilds WHERE id=?", [oldGuild.id], _auth)
+            await mysql("DELETE FROM guilds WHERE id=?", [oldGuild.id])
 
         console.log(`[<-] Deleted guild ${oldGuild.name} (${oldGuild.id})`)
     }

@@ -6,17 +6,20 @@ module.exports = {
     description: "Delete a registered role",
     execute: async (client, message, split) => {
 
+        //Continue only if an administrator called the command
         if (!message.member.permissions.has("ADMINISTRATOR")) 
             return; //administrator required
 
-            
+        //Check if the user specified a role
         if (split.length < 3) {
             message.channel.send("Please specify a role to delete from the register")
             return
         }
 
+        //Get the role
         const role = message.mentions.roles.first();
 
+        //Check if the role exists
         if (!role)
         return message.channel.send("Please specify a role to watch")
         
@@ -26,23 +29,13 @@ module.exports = {
             return;
         }
 
-    //#region SQL
-
-        let _auth = {
-            host: process.env.MYSQL_HOST,
-            database: process.env.MYSQL_DATABASE,
-            user: process.env.MYSQL_USER,
-            password: process.env.MYSQL_PASSWORD
-          };
-
         //Insert the guild if not exists
-        await mysql(`INSERT IGNORE INTO guilds (id) VALUES (?)`, [message.guild.id], _auth)
+        await mysql(`INSERT IGNORE INTO guilds (id) VALUES (?)`, [message.guild.id])
 
         //Delete the role
-        await mysql(`DELETE FROM roles WHERE id=? and guild_id=?`, [role.id, message.guild.id], _auth)
+        await mysql(`DELETE FROM roles WHERE id=? and guild_id=?`, [role.id, message.guild.id])
 
-    //#endregion
-
+        //Send a feedback message
         message.channel.send("```" + `Role ${role.name} (${role.id}) removed` + "```")
         console.log(`[-] removed role ${role.name} (${role.id}) in ${message.guild.name} (${message.guild.id})`)
     }

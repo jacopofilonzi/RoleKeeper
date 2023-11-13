@@ -6,13 +6,6 @@ module.exports = {
     description: "Get the members with the role",
     execute: async (client, message, split) => {
 
-        let _auth = {
-            host: process.env.MYSQL_HOST,
-            database: process.env.MYSQL_DATABASE,
-            user: process.env.MYSQL_USER,
-            password: process.env.MYSQL_PASSWORD
-        };
-
         //Continue only if an administrator called the command
         if (!message.member.permissions.has("ADMINISTRATOR"))
             return; //administrator required
@@ -29,7 +22,7 @@ module.exports = {
             }
 
             //Get the users with the role
-            const { results } = await mysql("SELECT * FROM cache WHERE role_id=?", [role.id], _auth)
+            const { results } = await mysql("SELECT * FROM cache WHERE role_id=?", [role.id])
 
             //Map the query result
             let users = results.map(user => user.user_id);
@@ -48,7 +41,7 @@ module.exports = {
         } else { //Give all the monitored role
                 
                 //Get the roles
-                const { results } = await mysql("SELECT * FROM roles WHERE guild_id=?", [message.guild.id], _auth)
+                const { results } = await mysql("SELECT * FROM roles WHERE guild_id=?", [message.guild.id])
     
                 //Map the query result
                 let roles = results.map(role => role.id);
