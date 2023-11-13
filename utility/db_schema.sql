@@ -63,6 +63,7 @@ CREATE TABLE `roles` (
 ALTER TABLE `cache`
   ADD KEY `user_id` (`user_id`),
   ADD KEY `cache_role_id` (`role_id`);
+  ADD UNIQUE(`user_id`, `role_id`);
 
 --
 -- Indici per le tabelle `guilds`
