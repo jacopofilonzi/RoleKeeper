@@ -12,6 +12,8 @@ create a .env file with the following informations:
     MYSQL_PASSWORD=root          #credential password
     MYSQL_DATABASE=rolekeeper    #database name you want to user
 
+    DELETEONLEAVE=false          #optional (check features)
+
 
 ## Avaiable commands
 
