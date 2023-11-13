@@ -15,11 +15,11 @@ module.exports = {
             return
         }
 
-        if (!role)
-        return message.channel.send("Please specify a role to watch")
-
         const role = message.mentions.roles.first();
 
+        if (!role)
+        return message.channel.send("Please specify a role to watch")
+        
         //check if is a role of the guild
         if (!message.guild.roles.cache.has(role.id)) {
             message.channel.send("This role seems to be not from this guild");
