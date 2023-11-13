@@ -13,8 +13,9 @@ module.exports = {
             password: process.env.MYSQL_PASSWORD
           };
 
-          
-        await mysql("DELETE FROM guilds WHERE id=?", [oldGuild.id], _auth)
+        if (process.env.DELETEONLEAVE == "true")
+            await mysql("DELETE FROM guilds WHERE id=?", [oldGuild.id], _auth)
+
         console.log(`[<-] Deleted guild ${oldGuild.name} (${oldGuild.id})`)
     }
 }
