@@ -26,6 +26,7 @@ create a .env file with the following informations:
 | delRole @role | remove a role from the monitor      |
 | watch         | list all the monitored roles        |
 | watch @role   | list all the user that has the role |
+| refresh       | useful in case of bot discontinuity for refreshing the cache of the server
 
 
 ## Features
