@@ -1,3 +1,8 @@
+# WARNING
+This bot is fine but we are currently in redevelopment to adapt it with a sqlite database.
+
+Monitor the repo for further updates.
+
 # RoleKeeper
 A simple bot that requires a database and keep the roles to user that leaves from your server 
 
